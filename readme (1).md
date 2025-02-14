@@ -10,16 +10,16 @@ Meine Noten sind sehr gut und ich habe alle Module verstanden. In dieser Lernper
 - [ ] Eine Startseite erstellen, wo man das Spiel starten kann.
 - [ ] Ein Forms für das erste Level erstellen und mit dem Start verbinden.
 
-✍️ Heute habe ich... (50-100 Wörter)
+Heute habe ich ein Start-Form gemacht mit einem Buttton, wo man zu ersten map kommt. Von dort kann man mit einem anderen Button wieder zurück. Das Startprogramm wird versteckt, wenn man den Button drückt und wieder sichtbar, wenn man zurückkehrt. Dann habe ich noch etwas mit Texturen probiert, das hat aber noch nicht ganz funktioniert mit dem einfügen und aufrufen.
 
-☝️ Vergessen Sie nicht, bis einen ersten Code auf github hochzuladen
 
 ## 21.2: Explorativer Wegwerf-Prototyp
 
-- [ ] ... (dieses AP sollte offline, also ohne Laptop zu bearbeiten sein)
-- [ ] ...
-- [ ] ...
-- [ ] ...
+- [ ] Einen Plan zeichnen, wie das erste Level aussehen soll
+- [ ] Dieses Level umsethen
+- [ ] Texturen für Türme suchen oder selbst erstellen und einfügen
+- [ ] Texturen für Monster hinzufügen
+      
 
 ✍️ Heute habe ich... (50-100 Wörter)
 
