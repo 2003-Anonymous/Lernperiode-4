@@ -4,13 +4,11 @@
 
 ## Grob-Planung
 
-1. Wo stehen Sie mit Ihren Noten? In welchen Modulen waren Sie besonders stark; in welchen sind die ungenügend? Welche davon sind besonders wichtig?
-2. Was wäre ein geeignetes Projekt für diese LP4? Können Sie mit diesem Projekt zeigen, wie Sie sich selbständig in eine Problemstellung einarbeiten können und eine überzeugende Lösung programmieren können?
-
+Meine Noten sind sehr gut und ich habe alle Module verstanden. In dieser Lernperiode möchte ich ein Towerdefense game in Winforms programmieren, um noch mehr über Objekte zu lernen. Ich weiss noch nicht ob man das so mit Grafiken umsetzten kann, aber das werde ich im Wegwerfprojekt herausfinden.
 ## 14.2: Explorativer Wegwerf-Prototyp
 
-- [ ] ...
-- [ ] ...
+- [ ] Eine Startseite erstellen, wo man das Spiel starten kann.
+- [ ] Ein Forms für das erste Level erstellen und mit dem Start verbinden.
 
 ✍️ Heute habe ich... (50-100 Wörter)
 
