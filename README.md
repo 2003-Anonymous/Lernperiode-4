@@ -22,11 +22,14 @@ Heute habe ich ein Start-Form gemacht mit einem Buttton, wo man zu ersten map ko
 - [ ] Texturen für Monster hinzufügen
       
 
-✍️ Heute habe ich... (50-100 Wörter)
-
-☝️ Vergessen Sie nicht, bis einen ersten Code auf github hochzuladen
+Heute habe ich eine Zeichnung von den ersten zwei Levels angefertigt und auch ein wenig was für Objekte und Klassen ich benötige und welche Eigenschaften diese haben. Dann habe ich ein Bild eingefügt und ich konnte dieses auch bewegen. Doch als ich programmiert habe, dass immer wenn ich die Taste P drücke, ein Objekt erstellt wird mit einem bild und sich das nach links bewegt, hat das nicht funktioniert und ich konnte das Problem noch nicht lösen. Dabei habe ich ausversehen irgendetwas gelöscht und dann hat mein Forms nicht mehr funktioniert. Das zu lösen hätte sich nicht mehr gelohnt, da ich sowiso ein neues Projekt nächste Woche anfange, also habe ich einfach noch fast alle Klassen definiert.
 
 ## 28.2: Kern-Funktionalität
+
+- [ ] Gegner als Objekte erstellen mit Bild
+- [ ] Programmieren, dass sich die Gegner bewegen
+- [ ] Türme hinzufügen, welche auf den nächsten Gegner schiessen können
+- [ ] Beim Schiessen werden Objekte erstellt, welche ein Bild haben und sich zu den Gegnern bewegen.
 
 ## 7.3: Kern-Funktionalität
 
