@@ -17,8 +17,8 @@ Heute habe ich ein Start-Form gemacht mit einem Buttton, wo man zu ersten map ko
 ## 21.2: Explorativer Wegwerf-Prototyp
 
 - [ ] Einen Plan zeichnen, wie das erste Level aussehen soll 
-- [ ] Dieses Level umsethen
-- [ ] Texturen für Türme suchen oder selbst erstellen und einfügen
+- [ ] Bewegung von Gegnern
+- [ ] Türme hinzufügen und Funktion
 - [ ] Texturen für Monster hinzufügen
       
 
