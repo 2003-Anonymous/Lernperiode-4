@@ -26,12 +26,20 @@ Heute habe ich eine Zeichnung von den ersten zwei Levels angefertigt und auch ei
 
 ## 28.2: Kern-Funktionalität
 
-- [ ] Gegner als Objekte erstellen mit Bild
-- [ ] Programmieren, dass sich die Gegner bewegen
+- [x] Gegner als Objekte erstellen mit Bild
+- [x] Programmieren, dass sich die Gegner bewegen
 - [ ] Türme hinzufügen, welche auf den nächsten Gegner schiessen können
 - [ ] Beim Schiessen werden Objekte erstellt, welche ein Bild haben und sich zu den Gegnern bewegen.
 
+Heute habe ich wieder 2 Forms erstellt und miteinander verbunden. Ein Startform und ein Form für das erste Level. Dann habe ich einen Spawnpunkt hinzugefügt, der begint Gegner zu spawnen nachdem man auf den Startbutton geklickt hat. Im Moment spawnt er 10 Gegner im Abstand von 2 Sekunden. Den Abstand habe ich mit einem Timer festgelegt. Die Gegner laufen einfach von Spawn bis ganz nach links. Dann habe ich noch einen ersten Turm hinzugefügt, der beim betreten des Levels plaziert wird. Dieser Turm kann aber noch nichts.
+
 ## 7.3: Kern-Funktionalität
+
+- [ ] Programmieren, dass der Turm schiessen kann.
+- [ ] Hinzufügen, dass die Projektiele auf den nächsten Gegner fliegen.
+- [ ] Die Projektiele sollen die Gegner töten können.
+- [ ] Bauen von mehr Türmen hinzufügen.
+Die Kernfunktionalität ist, dass es Gegner hat welche spawnen und sich bewegen können. Diese sollten von Türmen getötet werden können.
 
 ## 14.3: Architektur ausbauen
 
