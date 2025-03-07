@@ -35,14 +35,21 @@ Heute habe ich wieder 2 Forms erstellt und miteinander verbunden. Ein Startform 
 
 ## 7.3: Kern-Funktionalität
 
-- [ ] Programmieren, dass der Turm schiessen kann.
-- [ ] Hinzufügen, dass die Projektiele auf den nächsten Gegner fliegen.
-- [ ] Die Projektiele sollen die Gegner töten können.
+- [x] Programmieren, dass der Turm schiessen kann.
+- [x] Hinzufügen, dass die Projektiele auf den nächsten Gegner fliegen.
+- [x] Die Projektiele sollen die Gegner töten können.
 - [ ] Bauen von mehr Türmen hinzufügen.
 
 Die Kernfunktionalität ist, dass es Gegner hat welche spawnen und sich bewegen können. Diese sollten von Türmen getötet werden können.
 
+Heute habe ich Hinzugefügt, dass der Turm automatisch den nächsten Gegner findet und auf ihn schiesst. Im Moment verfolgen die Projektile den Gegner noch. Ich weiss noch nicht, ob ich das beheben oder so lasses soll. Dann habe ich noch eine Base hinzugefügt, welche nicht von den Gegnern ereicht werden darf.  Wenn ein Gegner die Festung ereicht, wird ihr Leben abgezogen. Die Leben sind in einer Progressbar, welche ich jetzt als Healthbar verwende, sichtbar.
+
 ## 14.3: Architektur ausbauen
+
+- [ ] Healthbar für die Gegner.
+- [ ] Bauen von neuen Türmen ermöglichen.
+- [ ] Währung hinzufügen, welche man durch töten von Gegnern bekommt.
+- [ ] Anzeige für verbleibende Gegner.
 
 ## 21.3: Architektur ausbauen
 
