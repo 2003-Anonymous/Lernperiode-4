@@ -39,6 +39,7 @@ Heute habe ich wieder 2 Forms erstellt und miteinander verbunden. Ein Startform 
 - [ ] Hinzufügen, dass die Projektiele auf den nächsten Gegner fliegen.
 - [ ] Die Projektiele sollen die Gegner töten können.
 - [ ] Bauen von mehr Türmen hinzufügen.
+
 Die Kernfunktionalität ist, dass es Gegner hat welche spawnen und sich bewegen können. Diese sollten von Türmen getötet werden können.
 
 ## 14.3: Architektur ausbauen
