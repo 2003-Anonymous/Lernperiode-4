@@ -33,7 +33,7 @@ namespace LP_4
                 Tower tower = new Tower(this);
                 tower.Location = p;
                 Controls.Add(tower);
-                //tower.Shoot();
+                tower.Shoot();
             }
                 
         }
@@ -51,9 +51,7 @@ namespace LP_4
         {
             Spawn spawn = new Spawn(this);
             spawn.Show();
-            Controls.Add(spawn);
-
-            
+            Controls.Add(spawn);            
         }
     }
 
@@ -115,12 +113,13 @@ namespace LP_4
         private System.Windows.Forms.Timer WalkTimer;
         public int damage = 50;
         private bool hasDamagedFortress = false;
-        private ProgressBar EnemyHealthBar;
+        public CustomProgressBar EnemyHealthBar;
 
 
 
         public Enemy(Form parentForm)
         {
+
             this.parentForm = parentForm;
             this.Location = new Point(700, 200);
             this.Size = new Size(50, 50);
@@ -129,14 +128,17 @@ namespace LP_4
 
             parentForm.Controls.Add(this);
 
-            EnemyHealthBar = new ProgressBar();
+            EnemyHealthBar = new CustomProgressBar();
             EnemyHealthBar.Size = new Size(70, 10);
-            EnemyHealthBar.Location = this.Location;
+            EnemyHealthBar.Location = new Point(700, 200);
             EnemyHealthBar.Maximum = 100;
-            EnemyHealthBar.Value = health;
+            EnemyHealthBar.Value = health;            
             EnemyHealthBar.BackColor = Color.Black;
             EnemyHealthBar.ForeColor = Color.Red;
+            
             parentForm.Controls.Add(EnemyHealthBar);
+
+
 
             Walk();
         }
@@ -155,18 +157,17 @@ namespace LP_4
         {
             this.Left -= speed;
 
+            EnemyHealthBar.Location = new Point(this.Left - 10, this.Top - 20);
+
             if (this.Bounds.IntersectsWith(parentForm.Controls.OfType<Base>().FirstOrDefault()?.Bounds ?? new Rectangle()))
             {                
                 Base fortress = parentForm.Controls.OfType<Base>().FirstOrDefault();
 
                 if (!hasDamagedFortress)
                 {
-                    if (fortress != null) fortress.TakeDamage(damage); this.Dispose();
+                    if (fortress != null) fortress.TakeDamage(damage); this.Dispose();EnemyHealthBar.Dispose();
                     hasDamagedFortress = true;
-                }
-                    
-
-                
+                }                
             }
         }        
     }
@@ -226,16 +227,16 @@ namespace LP_4
             this.Image = Image.FromFile(@"C:\Users\joshu\source\repos\LP_4\LP_4\Textures\arrow.bmp");
             target = FindClosestEnemy(parentForm);
 
-            ProjectileTimerStart();
+            ProjectileTimerStart(parentForm);
         }
 
 
-        public void MoveProjectile()
+        public void MoveProjectile(Form parentForm)
         {
             if (target == null || target.IsDisposed)
             {
                 ProjectileTimer.Stop();
-                this.Dispose(); 
+                FindClosestEnemy(parentForm);
                 return;
             }
 
@@ -258,23 +259,32 @@ namespace LP_4
             if (this.Bounds.IntersectsWith(target.Bounds))
             {
                 ProjectileTimer.Stop();
-                target.health -= 50; 
+                target.health -= 10;
+
+                UpdateEnemyHealthBar();
 
                 if (target.health <= 0)
                 {
-                    target.Dispose(); 
+                    target.Dispose();
+                    target.EnemyHealthBar.Dispose();
+                    
                 }
-                
+
                 this.Dispose(); 
             }
         }
 
+        public void UpdateEnemyHealthBar()
+        {
+            target.EnemyHealthBar.Value = target.health;
+        }
 
-        public void ProjectileTimerStart()
+
+        public void ProjectileTimerStart(Form parentForm)
         {
             ProjectileTimer = new System.Windows.Forms.Timer();
             ProjectileTimer.Interval = 50;
-            ProjectileTimer.Tick += (s, e) => MoveProjectile();
+            ProjectileTimer.Tick += (s, e) => MoveProjectile(parentForm);
             ProjectileTimer.Start();
         }
 
@@ -355,4 +365,32 @@ namespace LP_4
             healthBar.Value = health;
         }
     }
+
+
+
+    public class CustomProgressBar : ProgressBar
+    {
+        public Color BarColor { get; set; } = Color.Red;
+
+        public CustomProgressBar()
+        {
+            this.SetStyle(ControlStyles.UserPaint, true);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            Rectangle rect = ClientRectangle;
+
+            using (SolidBrush brush = new SolidBrush(BarColor))
+            {
+                // Fortschrittsbereich zeichnen
+                int width = (int)(rect.Width * ((double)Value / Maximum));
+                e.Graphics.FillRectangle(brush, 0, 0, width, rect.Height);
+            }
+
+            // Rahmen zeichnen
+            e.Graphics.DrawRectangle(Pens.Black, 0, 0, rect.Width - 1, rect.Height - 1);
+        }
+    }
+
 }
