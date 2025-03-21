@@ -47,8 +47,9 @@ Heute habe ich Hinzugefügt, dass der Turm automatisch den nächsten Gegner find
 ## 14.3: Architektur ausbauen
 
 - [x] Healthbar für die Gegner.
-- [ ] Bauen von neuen Türmen ermöglichen.
-- [ ] Währung hinzufügen, welche man durch töten von Gegnern bekommt.
+- [x] Bauen von neuen Türmen ermöglichen.
+- [x] Währung hinzufügen, welche man durch töten von Gegnern bekommt.
+- [ ] Verbessern von Türmen hinzufügen
 
 Heute habe ich die Healthbar für die Gegner programmiert. Diese wollte ich in rot, weil ich aber für die Healthbar der Base eine Progressbar genommen habe und diese Standartmässig grün ist und ich die Farbe nicht ändern konnte, musste ich ein neue Customprogressbar erstellen, welche ich dann rot machen konnte. Dann habe ich noch hinzugefügt, dass sich die Healthbar mit dem Gegner mitbewegt und dass sie auch anzeigt, wenn er Schaden genommen hat.
 
@@ -59,7 +60,14 @@ Heute habe ich die Healthbar für die Gegner programmiert. Diese wollte ich in r
 - [ ] Programmieren, dass später noch mehr Portale erscheinen.
 - [ ] Anzeige für verbleibende Gegner.
 
+Heute habe ich vom letzten mal noch hinzugefügt, dass Gegner Gold fallen lassen. Mit diesem Gold kann man dann neue Türme bauen. Zu beginn hat man 5 Gold, mit denen man den ersten Turm kaufen kann. Ich hatte heute noch ein Problem und zwar sind die Gegner obwohl sie tot waren, unsichtbar weitergelaufen und haben der Base Schaden gemacht. Das konnte ich zum Glück schnell beheben. Zum Schluss wollte ich noch programmieren, dass die Gegner nicht einfach gerade laufen, sondern sich entlang einem vorgegebenen Pfad bewegen. Das hat aber irgendwie noch nicht funktioniert. Die Gegner laufen jetzt ein wenig nach vorne und bleiben stecken. Zu dem habe ich noch ein paar Anpassungen an den Leben, der Geschwindigkeit, dem Schaden und der Feuerrate der Türme vorgenommen, dass es ausgeglichener ist. Dann habe ich noch versucht hinzuzufügen, dass man die Türme verbessern kann. Das hat aber irgendwie nicht ganz geklapt.
+
 ## 28.3: Auspolieren
+
+- [ ] Einen Hintergrund hinzufügen
+- [ ] Das Fenster vergrössern oder alles kleiner machen, damit das Spielfeld grösser ist
+- [ ] Anzeige für verbleibende Gegner
+- [ ] Einen Boss am Ende der Wave hizufügen
 
 ## 4.4: Auspolieren & Abschluss
 
