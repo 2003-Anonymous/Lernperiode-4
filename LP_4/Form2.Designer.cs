@@ -30,6 +30,7 @@
         {
             back_btn = new Button();
             start_spawn_btn = new Button();
+            Gold_Label = new Label();
             SuspendLayout();
             // 
             // back_btn
@@ -52,21 +53,33 @@
             start_spawn_btn.UseVisualStyleBackColor = true;
             start_spawn_btn.Click += start_spawn_btn_Click;
             // 
+            // Gold_Label
+            // 
+            Gold_Label.AutoSize = true;
+            Gold_Label.Location = new Point(341, 9);
+            Gold_Label.Name = "Gold_Label";
+            Gold_Label.Size = new Size(59, 25);
+            Gold_Label.TabIndex = 2;
+            Gold_Label.Text = "label1";
+            // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(Gold_Label);
             Controls.Add(start_spawn_btn);
             Controls.Add(back_btn);
             Name = "Form2";
             Text = "Map_1";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Button back_btn;
         private Button start_spawn_btn;
+        private Label Gold_Label;
     }
 }

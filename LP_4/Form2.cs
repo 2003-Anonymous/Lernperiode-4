@@ -12,29 +12,54 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace LP_4
 {
+    
     public partial class Form2 : Form
     {
+
+        int gold = 50;
         private Form1 parent;
         List<Point> towerPositions = new List<Point>()
         {
-            new Point(300, 75),
-            new Point(300, 300)
+            new Point(400, 75),
+            new Point(400, 300)            
         };
+
+        List<Point> platformPositions = new List<Point>()
+        {
+            new Point(200, 75),
+            new Point(200, 300),
+            new Point(400, 75),
+            new Point(400, 300)
+        };       
+
+
         public Form2(Form1 parent)
         {
+            
+
             InitializeComponent();
             this.parent = parent;
+            Gold_Label.Text = $"Gold: {gold}";
+
             Base fortress = new Base(this);
             Controls.Add(fortress);
 
-
-            foreach(Point p in towerPositions)
+            
+            foreach (Point t in platformPositions)
             {
-                Tower tower = new Tower(this);
-                tower.Location = p;
-                Controls.Add(tower);
-                tower.Shoot();
+                Towerplatform platform = new Towerplatform(this);
+                platform.Location = t;
+                Controls.Add(platform);                
             }
+
+            //foreach (Point p in towerPositions)
+            //{
+            //    Tower tower = new Tower(this);
+            //    tower.Location = p;
+            //    Controls.Add(tower);
+            //    tower.Shoot();
+                
+            //}
                 
         }
         
@@ -47,11 +72,47 @@ namespace LP_4
         }
 
 
+        public void AddGold(int amount)
+        {
+            gold += amount;
+            Gold_Label.Text = $"Gold: {gold}";
+        }
+
         private void start_spawn_btn_Click(object sender, EventArgs e)
         {
             Spawn spawn = new Spawn(this);
             spawn.Show();
-            Controls.Add(spawn);            
+            Controls.Add(spawn);
+            
+        }
+
+        public void BuyTower(object sender, int costs)
+        {
+            if(gold >= costs)
+            {
+                gold -= costs;
+                Gold_Label.Text = $"Gold: {gold}";
+
+                if (sender is Control clickedControl)
+                {
+                    Tower tower = new Tower(this);
+                    tower.Location = clickedControl.Location;
+                    Controls.Add(tower);
+                    tower.Shoot();
+
+                    clickedControl.Dispose();
+                }               
+            }
+        }
+        
+
+        public void BuyUpgrade(object sender, int costs)
+        {
+            if(gold >= costs)
+            {
+                gold -= costs;
+                Gold_Label.Text = $"Gold: {gold}";
+            }
         }
     }
 
@@ -62,6 +123,8 @@ namespace LP_4
     public class Spawn : PictureBox
     {
         private Form form;
+
+        int[] waves = [10, 5];
 
         public Spawn(Form form)
         {
@@ -75,12 +138,24 @@ namespace LP_4
 
 
         public void SpawnEnemys()
-        {            
-                int enemyCount = 10;
-                int delay = 2000; 
+        {
 
-                System.Windows.Forms.Timer SpawnTimer = new System.Windows.Forms.Timer();
-                SpawnTimer.Interval = delay;
+            List<Point> path = new List<Point>()
+        {
+            new Point(700, 200),
+            new Point(500, 200),
+            new Point(500, 100),
+            new Point(300, 100),
+            new Point(300, 200),
+            new Point(0, 200)
+        };
+
+            int enemyCount = 10;
+            int delay = 4000; 
+
+            System.Windows.Forms.Timer SpawnTimer = new System.Windows.Forms.Timer();
+            SpawnTimer.Interval = delay;
+
 
                 int currentEnemyIndex = 0;
 
@@ -88,7 +163,7 @@ namespace LP_4
                 {
                     if (currentEnemyIndex < enemyCount)
                     {
-                        Enemy enemy = new Enemy(form);
+                        Enemy enemy = new Enemy(form,path);
                         enemy.Show();
                         currentEnemyIndex++;
                     }
@@ -97,7 +172,7 @@ namespace LP_4
                         SpawnTimer.Stop(); 
                     }
                 };
-            SpawnTimer.Start();
+                SpawnTimer.Start();
         }
     }
 
@@ -108,8 +183,11 @@ namespace LP_4
     public class Enemy : PictureBox
     {
         private Form parentForm;
-        public int health = 100;
-        public int speed = 5;
+        public int health = 120;
+        public int speed = 3;
+        public int drop = 50;
+        private List<Point> path;
+        private int currentPathIndex = 0;
         private System.Windows.Forms.Timer WalkTimer;
         public int damage = 50;
         private bool hasDamagedFortress = false;
@@ -117,11 +195,13 @@ namespace LP_4
 
 
 
-        public Enemy(Form parentForm)
+        public Enemy(Form parentForm, List<Point> path)
         {
 
             this.parentForm = parentForm;
-            this.Location = new Point(700, 200);
+            this.path = path;
+            //700, 200
+            this.Location = path[0];
             this.Size = new Size(50, 50);
             this.Image = Image.FromFile(@"C:\Users\joshu\source\repos\LP_4\LP_4\Textures\enemy.png");
             this.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -131,7 +211,7 @@ namespace LP_4
             EnemyHealthBar = new CustomProgressBar();
             EnemyHealthBar.Size = new Size(70, 10);
             EnemyHealthBar.Location = new Point(700, 200);
-            EnemyHealthBar.Maximum = 100;
+            EnemyHealthBar.Maximum = health;
             EnemyHealthBar.Value = health;            
             EnemyHealthBar.BackColor = Color.Black;
             EnemyHealthBar.ForeColor = Color.Red;
@@ -148,28 +228,59 @@ namespace LP_4
         {
             WalkTimer = new System.Windows.Forms.Timer();
             WalkTimer.Interval = 50;
-            WalkTimer.Tick += (s, e) => Move();
+            WalkTimer.Tick += MoveAlongPath;
             WalkTimer.Start();            
         }
 
-
-        public void Move()
+        private void MoveAlongPath(object sender, EventArgs e)
         {
-            this.Left -= speed;
+           if(health > 0)
+            {
+                EnemyHealthBar.Location = new Point(this.Left - 10, this.Top - 20);
 
-            EnemyHealthBar.Location = new Point(this.Left - 10, this.Top - 20);
-
-            if (this.Bounds.IntersectsWith(parentForm.Controls.OfType<Base>().FirstOrDefault()?.Bounds ?? new Rectangle()))
-            {                
-                Base fortress = parentForm.Controls.OfType<Base>().FirstOrDefault();
-
-                if (!hasDamagedFortress)
+                if (currentPathIndex < path.Count - 1)
                 {
-                    if (fortress != null) fortress.TakeDamage(damage); this.Dispose();EnemyHealthBar.Dispose();
-                    hasDamagedFortress = true;
-                }                
+                    if (health > 0)
+                    {
+                        if (this.Bounds.IntersectsWith(parentForm.Controls.OfType<Base>().FirstOrDefault()?.Bounds ?? new Rectangle()))
+                        {
+                            Base fortress = parentForm.Controls.OfType<Base>().FirstOrDefault();
+
+                            if (!hasDamagedFortress)
+                            {
+                                if (fortress != null) fortress.TakeDamage(damage); this.Dispose(); EnemyHealthBar.Dispose();
+                                hasDamagedFortress = true;
+                            }
+                        }
+                    }
+
+                    Point target = path[currentPathIndex + 1];
+
+                    
+                    if (this.Left < target.X)
+                        this.Left += speed;
+                    else if (this.Left > target.X)
+                        this.Left -= speed;
+
+                    if (this.Top < target.Y)
+                        this.Top += speed;
+                    else if (this.Top > target.Y)
+                        this.Top -= speed;
+
+                    
+                    if (this.Location == target)
+                    {
+                        currentPathIndex++;
+                    }
+                }
+                else
+                {
+                    
+                    WalkTimer.Stop();
+                }
             }
-        }        
+        }
+            
     }
 
 
@@ -178,18 +289,19 @@ namespace LP_4
 
     public class Tower : PictureBox
     {
-        public int firerate = 10;
+        public int firerate = 5;
         private System.Windows.Forms.Timer ShootTimer;
         private Form parentForm;
+        public int upgradeCosts = 100;
 
 
         public Tower(Form parent)
-        {
-            this.parentForm = parent;
+        {           
+            this.parentForm = parent;            
             this.Size = new Size(100, 100);           
             this.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Image = Image.FromFile(@"C:\Users\joshu\source\repos\LP_4\LP_4\Textures\building-3603542_1280.png");
-
+            this.Click += Upgrade;
         }
 
 
@@ -208,6 +320,21 @@ namespace LP_4
             parentForm.Controls.Add(projectile);
             projectile.Location = new Point(this.Left + this.Width / 2, this.Top + this.Height / 2);
         }
+
+        public void Upgrade(object sender, EventArgs e)
+        {
+            if (sender is Tower tower)
+            {
+                bool enoughGold = false;
+
+                if (enoughGold)
+                {
+                    Form2 form = Parent as Form2;
+                    form.BuyUpgrade(sender, upgradeCosts);
+                }
+            }
+        }
+
     }
 
 
@@ -216,8 +343,9 @@ namespace LP_4
 
     public class Projectile : PictureBox
     {
-        public int speed = 5;
+        public int speed = 10;
         private Enemy target;
+        public int damage = 20;
         private System.Windows.Forms.Timer ProjectileTimer;
 
         public Projectile(Point startPosition, Form parentForm)
@@ -237,6 +365,7 @@ namespace LP_4
             {
                 ProjectileTimer.Stop();
                 FindClosestEnemy(parentForm);
+                this.Dispose();
                 return;
             }
 
@@ -259,17 +388,20 @@ namespace LP_4
             if (this.Bounds.IntersectsWith(target.Bounds))
             {
                 ProjectileTimer.Stop();
-                target.health -= 10;
+                
+                target.health -= damage;
 
-                UpdateEnemyHealthBar();
+                UpdateEnemyHealthBar();              
 
                 if (target.health <= 0)
                 {
-                    target.Dispose();
-                    target.EnemyHealthBar.Dispose();
+                    Form2 form = target.Parent as Form2;
                     
+                    form.AddGold(target.drop);
+                    target.Dispose();
+                    target.EnemyHealthBar.Dispose();                    
                 }
-
+                
                 this.Dispose(); 
             }
         }
@@ -390,6 +522,29 @@ namespace LP_4
 
             // Rahmen zeichnen
             e.Graphics.DrawRectangle(Pens.Black, 0, 0, rect.Width - 1, rect.Height - 1);
+        }
+    }
+
+
+
+    public class Towerplatform : PictureBox
+    {
+        public int costs = 50;
+
+        public Towerplatform(Form parent)
+        {
+            this.Size = new Size(70, 80);
+            this.SizeMode = PictureBoxSizeMode.StretchImage;
+            this.Image = Image.FromFile(@"C:\Users\joshu\source\repos\LP_4\LP_4\Textures\rug-576081_1280.png");
+            this.Click += PlatformClick;
+        }
+
+        
+        private void PlatformClick(object sender, EventArgs e)
+        {
+            Form2 form = Parent as Form2;
+
+            form.BuyTower(sender, costs);            
         }
     }
 
