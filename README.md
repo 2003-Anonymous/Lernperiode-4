@@ -49,11 +49,15 @@ Heute habe ich Hinzugefügt, dass der Turm automatisch den nächsten Gegner find
 - [x] Healthbar für die Gegner.
 - [ ] Bauen von neuen Türmen ermöglichen.
 - [ ] Währung hinzufügen, welche man durch töten von Gegnern bekommt.
-- [ ] Anzeige für verbleibende Gegner.
-
+- [ ] 
 Heute habe ich die Healthbar für die Gegner programmiert. Diese wollte ich in rot, weil ich aber für die Healthbar der Base eine Progressbar genommen habe und diese Standartmässig grün ist und ich die Farbe nicht ändern konnte, musste ich ein neue Customprogressbar erstellen, welche ich dann rot machen konnte. Dann habe ich noch hinzugefügt, dass sich die Healthbar mit dem Gegner mitbewegt und dass sie auch anzeigt, wenn er Schaden genommen hat.
 
 ## 21.3: Architektur ausbauen
+
+- [ ] Hinzufügen, dass die Gegner nicht nur gerade aus Laufen
+- [ ] Mehrere Wellen hinzufügen
+- [ ] Programmieren, dass später noch mehr Portale erscheinen.
+- [ ] Anzeige für verbleibende Gegner.
 
 ## 28.3: Auspolieren
 
