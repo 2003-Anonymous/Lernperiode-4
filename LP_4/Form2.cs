@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,7 +9,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace LP_4
 {
@@ -25,11 +28,12 @@ namespace LP_4
         };
 
         List<Point> platformPositions = new List<Point>()
-        {
-            new Point(200, 75),
-            new Point(200, 300),
-            new Point(400, 75),
-            new Point(400, 300)
+        {            
+            new Point(75, 125), 
+            new Point(225, 225),
+            new Point(225, 350),
+            new Point(400, 150),
+            new Point(400, 50)
         };       
 
 
@@ -58,11 +62,15 @@ namespace LP_4
             //    tower.Location = p;
             //    Controls.Add(tower);
             //    tower.Shoot();
-                
+
             //}
-                
+            //this.BackgroundImage = Image.FromFile(@"C:\Users\joshu\source\repos\LP_4\LP_4\Textures\Background_1.jpeg");
+            //this.BackgroundImageLayout = ImageLayout.Stretch; // Optional: Bild anpassen
+
         }
-        
+
+
+
 
         private void back_btn_Click(object sender, EventArgs e)
         {
@@ -124,7 +132,7 @@ namespace LP_4
     {
         private Form form;
 
-        int[] waves = [10, 5];
+        int[] waves = [10, 3];
 
         public Spawn(Form form)
         {
@@ -141,14 +149,16 @@ namespace LP_4
         {
 
             List<Point> path = new List<Point>()
-        {
+            {
             new Point(700, 200),
             new Point(500, 200),
-            new Point(500, 100),
-            new Point(300, 100),
-            new Point(300, 200),
-            new Point(0, 200)
-        };
+            new Point(500, 125),
+            new Point(300, 125),
+            new Point(300, 300),
+            new Point(150, 300),
+            new Point(150, 200),
+            new Point(0, 200),
+            };
 
             int enemyCount = 10;
             int delay = 4000; 
@@ -157,22 +167,28 @@ namespace LP_4
             SpawnTimer.Interval = delay;
 
 
-                int currentEnemyIndex = 0;
+            int currentEnemyIndex = 0;
 
-                SpawnTimer.Tick += (s, args) =>
+            SpawnTimer.Tick += (s, args) =>
+            {
+                if (currentEnemyIndex < enemyCount)
                 {
-                    if (currentEnemyIndex < enemyCount)
-                    {
-                        Enemy enemy = new Enemy(form,path);
-                        enemy.Show();
-                        currentEnemyIndex++;
-                    }
-                    else
-                    {
-                        SpawnTimer.Stop(); 
-                    }
-                };
-                SpawnTimer.Start();
+                    Enemy enemy = new Enemy(form,path);
+                    enemy.Show();
+                    currentEnemyIndex++;
+                }
+                else if(currentEnemyIndex == enemyCount)
+                {
+                    Boss boss = new Boss(form, path);
+                    boss.Show();
+                    currentEnemyIndex++;
+                }
+                else
+                {
+                    SpawnTimer.Stop(); 
+                }
+            };
+            SpawnTimer.Start();
         }
     }
 
@@ -199,17 +215,16 @@ namespace LP_4
         {
 
             this.parentForm = parentForm;
-            this.path = path;
-            //700, 200
-            this.Location = path[0];
-            this.Size = new Size(50, 50);
+            this.path = path;            
+            this.Location = path[0]; //700, 200
+            this.Size = new Size(25, 25);
             this.Image = Image.FromFile(@"C:\Users\joshu\source\repos\LP_4\LP_4\Textures\enemy.png");
             this.SizeMode = PictureBoxSizeMode.StretchImage;
 
             parentForm.Controls.Add(this);
 
             EnemyHealthBar = new CustomProgressBar();
-            EnemyHealthBar.Size = new Size(70, 10);
+            EnemyHealthBar.Size = new Size(35, 5);
             EnemyHealthBar.Location = new Point(700, 200);
             EnemyHealthBar.Maximum = health;
             EnemyHealthBar.Value = health;            
@@ -238,44 +253,47 @@ namespace LP_4
             {
                 EnemyHealthBar.Location = new Point(this.Left - 10, this.Top - 20);
 
-                if (currentPathIndex < path.Count - 1)
+                if (currentPathIndex < (path.Count - 1))
                 {
-                    if (health > 0)
+                    
+                    
+                    if (this.Bounds.IntersectsWith(parentForm.Controls.OfType<Base>().FirstOrDefault()?.Bounds ?? new Rectangle()))
                     {
-                        if (this.Bounds.IntersectsWith(parentForm.Controls.OfType<Base>().FirstOrDefault()?.Bounds ?? new Rectangle()))
-                        {
-                            Base fortress = parentForm.Controls.OfType<Base>().FirstOrDefault();
+                        Base fortress = parentForm.Controls.OfType<Base>().FirstOrDefault();
 
-                            if (!hasDamagedFortress)
-                            {
-                                if (fortress != null) fortress.TakeDamage(damage); this.Dispose(); EnemyHealthBar.Dispose();
-                                hasDamagedFortress = true;
-                            }
+                        if (!hasDamagedFortress)
+                        {
+                            if (fortress != null) fortress.TakeDamage(damage); this.Dispose(); EnemyHealthBar.Dispose();
+                            hasDamagedFortress = true;
                         }
                     }
+                    
 
                     Point target = path[currentPathIndex + 1];
 
-                    
-                    if (this.Left < target.X)
-                        this.Left += speed;
-                    else if (this.Left > target.X)
-                        this.Left -= speed;
+                    int dx = target.X - this.Left;
+                    int dy = target.Y - this.Top;
+                    double distance = Math.Sqrt(dx * dx + dy * dy);
 
-                    if (this.Top < target.Y)
-                        this.Top += speed;
-                    else if (this.Top > target.Y)
-                        this.Top -= speed;
-
-                    
-                    if (this.Location == target)
+                    if (distance < speed)
                     {
                         currentPathIndex++;
+                        if (currentPathIndex >= path.Count - 1)
+                        {
+                            WalkTimer.Stop();
+                        }
+                    }
+                    else
+                    {                        
+                        double moveX = dx / distance * speed;
+                        double moveY = dy / distance * speed;
+
+                        this.Left += (int)moveX;
+                        this.Top += (int)moveY;
                     }
                 }
                 else
-                {
-                    
+                {                    
                     WalkTimer.Stop();
                 }
             }
@@ -298,7 +316,7 @@ namespace LP_4
         public Tower(Form parent)
         {           
             this.parentForm = parent;            
-            this.Size = new Size(100, 100);           
+            this.Size = new Size(50, 50);           
             this.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Image = Image.FromFile(@"C:\Users\joshu\source\repos\LP_4\LP_4\Textures\building-3603542_1280.png");
             this.Click += Upgrade;
@@ -456,14 +474,14 @@ namespace LP_4
 
         public Base(Form parent)
         {
-            this.Size = new Size(70, 80);
+            this.Size = new Size(35, 40);
             this.Location = new Point(10, (parent.ClientSize.Height - this.Height) / 2);
             this.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Image = Image.FromFile(@"C:\Users\joshu\source\repos\LP_4\LP_4\Textures\tower-146734_1280.png");
 
             healthBar = new ProgressBar();
-            healthBar.Size = new Size(70, 10);  
-            healthBar.Location = new Point(10, this.Height + 70);  
+            healthBar.Size = new Size(35, 5);  
+            healthBar.Location = new Point(10, this.Height + 135);  
             healthBar.Maximum = 1000;  
             healthBar.Value = health;  
             healthBar.BackColor = Color.Black;  
@@ -533,7 +551,7 @@ namespace LP_4
 
         public Towerplatform(Form parent)
         {
-            this.Size = new Size(70, 80);
+            this.Size = new Size(35, 40);
             this.SizeMode = PictureBoxSizeMode.StretchImage;
             this.Image = Image.FromFile(@"C:\Users\joshu\source\repos\LP_4\LP_4\Textures\rug-576081_1280.png");
             this.Click += PlatformClick;
@@ -547,5 +565,26 @@ namespace LP_4
             form.BuyTower(sender, costs);            
         }
     }
+
+
+
+    public class Boss : Enemy
+    {
+        
+
+
+        public Boss(Form parentForm, List<Point> path) : base(parentForm, path)
+        {
+            this.health = 1000;
+            this.drop = 200;
+            this.damage = 150;
+            this.Size = new Size(50, 50);
+            this.EnemyHealthBar.Maximum = this.health;
+            this.EnemyHealthBar.Value = this.health;
+            this.Image = Image.FromFile(@"C:\Users\joshu\source\repos\LP_4\LP_4\Textures\zombie-7470191_1280.png");
+            this.SizeMode = PictureBoxSizeMode.StretchImage;
+        }
+    }
+
 
 }
