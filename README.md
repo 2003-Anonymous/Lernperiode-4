@@ -60,14 +60,15 @@ Heute habe ich die Healthbar für die Gegner programmiert. Diese wollte ich in r
 - [ ] Programmieren, dass später noch mehr Portale erscheinen.
 - [ ] Anzeige für verbleibende Gegner.
 
-Heute habe ich vom letzten mal noch hinzugefügt, dass Gegner Gold fallen lassen. Mit diesem Gold kann man dann neue Türme bauen. Zu beginn hat man 5 Gold, mit denen man den ersten Turm kaufen kann. Ich hatte heute noch ein Problem und zwar sind die Gegner obwohl sie tot waren, unsichtbar weitergelaufen und haben der Base Schaden gemacht. Das konnte ich zum Glück schnell beheben. Zum Schluss wollte ich noch programmieren, dass die Gegner nicht einfach gerade laufen, sondern sich entlang einem vorgegebenen Pfad bewegen. Das hat aber irgendwie noch nicht funktioniert. Die Gegner laufen jetzt ein wenig nach vorne und bleiben stecken. Zu dem habe ich noch ein paar Anpassungen an den Leben, der Geschwindigkeit, dem Schaden und der Feuerrate der Türme vorgenommen, dass es ausgeglichener ist. Dann habe ich noch versucht hinzuzufügen, dass man die Türme verbessern kann. Das hat aber irgendwie nicht ganz geklapt.
+Heute habe ich vom letzten mal noch hinzugefügt, dass Gegner Gold fallen lassen. Mit diesem Gold kann man dann neue Türme bauen. Zu beginn hat man 50 Gold, mit denen man den ersten Turm kaufen kann. Ich hatte heute noch ein Problem und zwar sind die Gegner obwohl sie tot waren, unsichtbar weitergelaufen und haben der Base Schaden gemacht. Das konnte ich zum Glück schnell beheben. Zum Schluss wollte ich noch programmieren, dass die Gegner nicht einfach gerade laufen, sondern sich entlang einem vorgegebenen Pfad bewegen. Das hat aber irgendwie noch nicht funktioniert. Die Gegner laufen jetzt ein wenig nach vorne und bleiben stecken. Zu dem habe ich noch ein paar Anpassungen an den Leben, der Geschwindigkeit, dem Schaden und der Feuerrate der Türme vorgenommen, dass es ausgeglichener ist. Dann habe ich noch versucht hinzuzufügen, dass man die Türme verbessern kann. Das hat aber irgendwie nicht ganz geklapt.
 
 ## 28.3: Auspolieren
 
-- [ ] Einen Hintergrund hinzufügen
-- [ ] Das Fenster vergrössern oder alles kleiner machen, damit das Spielfeld grösser ist
+- [x] Einen Hintergrund hinzufügen
+- [x] Das Fenster vergrössern oder alles kleiner machen, damit das Spielfeld grösser ist
 - [ ] Anzeige für verbleibende Gegner
-- [ ] Einen Boss am Ende der Wave hizufügen
+- [x] Einen Boss am Ende der Wave hizufügen
 
+Heute habe ich alles kleiner gemacht, dass das Feld grösser erscheint. Ich habe auch noch hinzugefügt, dass am Ende der Welle ein Boss erscheint. Dieser sieht anders aus, hat viel mehr Leben und macht mehr Schaden an der Burg, er droppt dafür auch mehr Gold. Ich wollte noch einen Hintergrund hinzufügen, das hat auch geklappt. Dieser war jedoch so unscharf, dass ich ihn lieber wieder entfernt habe. Ich habe nicht herausgefunden, wiso das so ist. Ich habe aber harausgefunden, warum die Gegner nicht weiter auf ihrem Pfad gegangen sind. Und zwar lag das daran, dass sie mehrere Pixel auf einmal gehen. Wenn jetzt aber die Distanz zum nächste Punkt nicht durch die Anzahl Pixel pro Schritt teilbar ist, bleibt er ein wenig vor diesem Punkt stehen und erreicht ihn somit nie, er kann also nie zum nächsten Punkt gehen und bleibt stecken. Dass habe ich gelöst, indem ich durch if überprüfe, ob die Distanz  zum Punkt kleiner ist als die Schrittgröse. So funktioniert es. Dann habe ich noch die Türme umgestellt, dass es mit dem Weg Sinn ergibt.
 ## 4.4: Auspolieren & Abschluss
 
