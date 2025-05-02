@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,6 +21,7 @@ namespace LP_4
     {
 
         int gold = 50;
+        
         private Form1 parent;
         List<Point> towerPositions = new List<Point>()
         {
@@ -55,6 +57,9 @@ namespace LP_4
                 platform.Location = t;
                 Controls.Add(platform);                
             }
+
+            
+            
 
             //foreach (Point p in towerPositions)
             //{
@@ -113,6 +118,11 @@ namespace LP_4
             }
         }
         
+        public void RemainingEnemys(object sender, EventArgs e)
+        {
+            remainingEnemies.Text = ("Remaining Enemys: ");
+        }
+
 
         public void BuyUpgrade(object sender, int costs)
         {
@@ -161,36 +171,55 @@ namespace LP_4
             };
 
             int enemyCount = 10;
-            int delay = 4000; 
+            int delay = 4000;
+            int waveCount = 3;
+            int currentWaveCount = 0;
+
+           
 
             System.Windows.Forms.Timer SpawnTimer = new System.Windows.Forms.Timer();
             SpawnTimer.Interval = delay;
 
-
+           
             int currentEnemyIndex = 0;
 
             SpawnTimer.Tick += (s, args) =>
             {
                 if (currentEnemyIndex < enemyCount)
                 {
-                    Enemy enemy = new Enemy(form,path);
+                    Enemy enemy = new Enemy(form, path);
                     enemy.Show();
                     currentEnemyIndex++;
                 }
-                else if(currentEnemyIndex == enemyCount)
+                else if (currentEnemyIndex == enemyCount)
                 {
                     Boss boss = new Boss(form, path);
-                    boss.Show();
+                    boss.Show();                                     
                     currentEnemyIndex++;
                 }
                 else
                 {
-                    SpawnTimer.Stop(); 
+                    SpawnTimer.Stop();
+                            
+                    currentWaveCount++;
+                    if(currentWaveCount < waveCount)
+                    {
+                        enemyCount += 5;
+                        currentEnemyIndex = 0;
+                        SpawnTimer.Start();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Alle Wellen besiegt!");
+                    }
                 }
             };
-            SpawnTimer.Start();
+            SpawnTimer.Start();                
+                    
         }
+                
     }
+    
 
 
 
@@ -417,7 +446,9 @@ namespace LP_4
                     
                     form.AddGold(target.drop);
                     target.Dispose();
-                    target.EnemyHealthBar.Dispose();                    
+                    target.EnemyHealthBar.Dispose();
+                    
+                    RemainingEnemy
                 }
                 
                 this.Dispose(); 
@@ -570,9 +601,6 @@ namespace LP_4
 
     public class Boss : Enemy
     {
-        
-
-
         public Boss(Form parentForm, List<Point> path) : base(parentForm, path)
         {
             this.health = 1000;

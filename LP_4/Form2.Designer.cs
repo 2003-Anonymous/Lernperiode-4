@@ -31,6 +31,7 @@
             back_btn = new Button();
             start_spawn_btn = new Button();
             Gold_Label = new Label();
+            remainingEnemies = new Label();
             SuspendLayout();
             // 
             // back_btn
@@ -56,17 +57,27 @@
             // Gold_Label
             // 
             Gold_Label.AutoSize = true;
-            Gold_Label.Location = new Point(341, 9);
+            Gold_Label.Location = new Point(202, 11);
             Gold_Label.Name = "Gold_Label";
             Gold_Label.Size = new Size(59, 25);
             Gold_Label.TabIndex = 2;
             Gold_Label.Text = "label1";
+            // 
+            // remainingEnemies
+            // 
+            remainingEnemies.AutoSize = true;
+            remainingEnemies.Location = new Point(410, 11);
+            remainingEnemies.Name = "remainingEnemies";
+            remainingEnemies.Size = new Size(59, 25);
+            remainingEnemies.TabIndex = 3;
+            remainingEnemies.Text = "label1";
             // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(remainingEnemies);
             Controls.Add(Gold_Label);
             Controls.Add(start_spawn_btn);
             Controls.Add(back_btn);
@@ -81,5 +92,6 @@
         private Button back_btn;
         private Button start_spawn_btn;
         private Label Gold_Label;
+        private Label remainingEnemies;
     }
 }
