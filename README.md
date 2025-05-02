@@ -70,7 +70,8 @@ Heute habe ich alles verkleinert , dass das Feld grösser erscheint. Ich habe au
 ## Beschreibung Projekt
 Ich habe ein kleines Towerdefens game in Winforms programmiert. Am Anfang hat man 50 Gold, mit welchem man den ersten Turm bauen kann. Wenn man auf Start klickt, erscheint ein Portal, aus welchem Gegner kommen und am Schluss einer Welle kommt ein kleiner Boss, welcher mehr Leben hat. Durch getötete Gegner erhält man Gold, mit welchem man mehr Türme bauen kann. Die Gegner laufen auf einem Zickzack-Weg zu einer Burg. Wenn ein Gegner die Burg erreicht, bekommt die Burg Schaden.
 
-![Towerdefense](https://github.com/user-attachments/assets/cb69571d-123c-48f3-8776-14c38fd66e42)
+![Towerdefense_2](https://github.com/user-attachments/assets/90203836-9040-4c4d-a1d9-0da4a182332f)
+
 
 ## Reflexion
 Mein Projekt sieht nicht besonders schön aus, aber es funktioniert. Ich konnte die objektorientierte Programmierung gut üben, mit den Türmen, den Projektilen und den Gegnern. Ich habe auch viel darüber gelernt, wie Objekte miteinander kommunizieren und wie ich Informationen von einem Objekt in ein anderes Objekt bekomme. Ausserdem habe ich bei den Projektielen noch gelernt, wie die Position des nächsten Gegners berechnet wird. Ich habe also viel gelernt und diese Periode hat mir viel für Zukünftiige Projekte gebracht. Ich bin eigentlich auch gut vorangekommen, habe aber manchmal ein wenig Zeit benötigt, um herauszufinden, wie ich die Information in ein Objekt bekomme, ohne dass diese Objekte sonst irgendwie eine Verbindung haben.
